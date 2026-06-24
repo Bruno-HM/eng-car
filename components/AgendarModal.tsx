@@ -15,6 +15,7 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
   const [selectedColab, setSelectedColab] = useState<any>(null)
   const [pinError, setPinError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [loadingData, setLoadingData] = useState(true)
 
   const [dataInicio, setDataInicio] = useState("")
   const [horaInicio, setHoraInicio] = useState("")
@@ -22,9 +23,14 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
   const [horaFim, setHoraFim] = useState("")
 
   useEffect(() => {
-    // Para agendamento, idealmente trazemos todos os veículos, mas vamos usar os disponíveis
-    getVeiculosDisponiveis().then(setVeiculos)
-    getColaboradores().then(setColaboradores)
+    Promise.all([
+      getVeiculosDisponiveis(),
+      getColaboradores()
+    ]).then(([veic, colab]) => {
+      setVeiculos(veic)
+      setColaboradores(colab)
+      setLoadingData(false)
+    })
   }, [])
 
   const handlePinComplete = async (pin: string) => {
@@ -83,20 +89,26 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
             <h2 className="modal-title">Qual Veículo deseja agendar?</h2>
             <button className="btn-close" onClick={onClose}>×</button>
           </div>
-          <div className="responsive-grid-2">
-            {veiculos.map(v => (
-              <div 
-                key={v.id} 
-                className="list-item"
-                onClick={() => { setSelectedVeiculo(v); setStep(2) }}
-              >
-                <div>
-                  <div className="list-item-title">{v.placa}</div>
-                  <div className="list-item-subtitle">Modelo: {v.modelo}</div>
+          {loadingData ? (
+            <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
+              Carregando veículos...
+            </div>
+          ) : (
+            <div className="responsive-grid-2">
+              {veiculos.map(v => (
+                <div 
+                  key={v.id} 
+                  className="list-item"
+                  onClick={() => { setSelectedVeiculo(v); setStep(2) }}
+                >
+                  <div>
+                    <div className="list-item-title">{v.placa}</div>
+                    <div className="list-item-subtitle">Modelo: {v.modelo}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 

@@ -14,9 +14,13 @@ export default function RetirarModal({ onClose }: { onClose: () => void }) {
   const [agendamentoColab, setAgendamentoColab] = useState<any>(null)
   const [pinError, setPinError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [loadingColabs, setLoadingColabs] = useState(true)
 
   useEffect(() => {
-    getColaboradores().then(setColaboradores)
+    getColaboradores().then(res => {
+      setColaboradores(res)
+      setLoadingColabs(false)
+    })
   }, [])
 
   const handlePinComplete = async (pin: string) => {
@@ -58,19 +62,25 @@ export default function RetirarModal({ onClose }: { onClose: () => void }) {
             <h2 className="modal-title">Quem está retirando?</h2>
             <button className="btn-close" onClick={onClose}>×</button>
           </div>
-          <div className="responsive-grid-2">
-            {colaboradores.map(c => (
-              <div 
-                key={c.id} 
-                className="list-item"
-                onClick={() => { setSelectedColab(c); setStep(2) }}
-              >
-                <div>
-                  <div className="list-item-title">{c.nome}</div>
+          {loadingColabs ? (
+            <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
+              Carregando motoristas...
+            </div>
+          ) : (
+            <div className="responsive-grid-2">
+              {colaboradores.map(c => (
+                <div 
+                  key={c.id} 
+                  className="list-item"
+                  onClick={() => { setSelectedColab(c); setStep(2) }}
+                >
+                  <div>
+                    <div className="list-item-title">{c.nome}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
