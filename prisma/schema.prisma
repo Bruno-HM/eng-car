@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Colaborador {
+  id                  String              @id @default(cuid())
+  nome                String
+  empresaId           String
+  pinAcesso           String
+  agendamentos        Agendamento[]
+  logs                Log[]
+  devolucoesPendentes DevolucaoPendente[]
+}
+
+model Veiculo {
+  id                String             @id @default(cuid())
+  placa             String             @unique
+  modelo            String
+  kmAtual           Int
+  status            String             // DISPONIVEL, EM_USO, MANUTENCAO, AGUARDANDO_CONFERENCIA
+  agendamentos      Agendamento[]
+  logs              Log[]
+  devolucaoPendente DevolucaoPendente?
+}
+
+model Agendamento {
+  id             String      @id @default(cuid())
+  veiculoId      String
+  colaboradorId  String
+  dataHoraInicio DateTime
+  dataHoraFim    DateTime
+  status         String      // ATIVO, CONCLUIDO, CANCELADO_NOSHOW
+
+  veiculo     Veiculo     @relation(fields: [veiculoId], references: [id], onDelete: Cascade)
+  colaborador Colaborador @relation(fields: [colaboradorId], references: [id], onDelete: Cascade)
+}
+
+model Log {
+  id            String      @id @default(cuid())
+  veiculoId     String
+  colaboradorId String
+  tipo          String      // RETIRADA, DEVOLUCAO
+  dataHoraAcao  DateTime    @default(now())
+  kmInformado   Int
+  combustivel   String?
+  avariasJson   String?
+
+  // Campos para auditoria da declaração original do colaborador
+  kmOriginalColab          Int?
+  combustivelOriginalColab String?
+  avariasOriginalColabJson String?
+
+  veiculo     Veiculo     @relation(fields: [veiculoId], references: [id], onDelete: Cascade)
+  colaborador Colaborador @relation(fields: [colaboradorId], references: [id], onDelete: Cascade)
+}
+
+model DevolucaoPendente {
+  id                    String   @id @default(cuid())
+  veiculoId             String   @unique
+  colaboradorId         String
+  dataHoraSolicitacao   DateTime @default(now())
+  kmDeclarado           Int
+  combustivelDeclarado  String
+  avariasDeclaradasJson String?
+
+  veiculo     Veiculo     @relation(fields: [veiculoId], references: [id], onDelete: Cascade)
+  colaborador Colaborador @relation(fields: [colaboradorId], references: [id], onDelete: Cascade)
+}
