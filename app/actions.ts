@@ -422,6 +422,22 @@ export async function getAgendamentosAtivos() {
   })
 }
 
+export async function getAgendamentosPorVeiculo(veiculoId: string) {
+  const agora = new Date()
+  return await prisma.agendamento.findMany({
+    where: {
+      veiculoId,
+      status: 'ATIVO',
+      dataHoraFim: {
+        gte: agora
+      }
+    },
+    orderBy: {
+      dataHoraInicio: 'asc'
+    }
+  })
+}
+
 export async function cancelarAgendamento(agendamentoId: string, pin: string | null = null) {
   const agendamento = await prisma.agendamento.findUnique({
     where: { id: agendamentoId },
