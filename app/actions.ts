@@ -64,6 +64,13 @@ export async function getVeiculosDisponiveis() {
   })
 }
 
+export async function getVeiculosParaAgendamento() {
+  return await prisma.veiculo.findMany({
+    where: { status: { not: 'MANUTENCAO' } },
+    orderBy: { modelo: 'asc' }
+  })
+}
+
 export async function getVeiculosDisponiveisParaColaborador(colaboradorId: string) {
   const agora = new Date()
   const hojeInicio = new Date(agora)
@@ -183,19 +190,8 @@ export async function retirarVeiculo(colaboradorId: string, veiculoId: string) {
     return { success: false, error: "Este veículo está reservado para outro colaborador hoje." }
   }
 
-  // Se passou, conclui o agendamento ativo (se ele mesmo agendou)
-  const limiteAtraso = new Date(agora.getTime() + 2 * 60 * 60000)
-  await prisma.agendamento.updateMany({
-    where: {
-      veiculoId: veiculoId,
-      colaboradorId: colaboradorId,
-      status: 'ATIVO',
-      dataHoraInicio: { lt: limiteAtraso }
-    },
-    data: {
-      status: 'CONCLUIDO'
-    }
-  })
+  // Nós NÃO concluímos o agendamento aqui. Ele continua ATIVO para que o calendário continue bloqueado
+  // até o momento em que ele efetivamente devolver o carro.
 
   // Atualiza veículo
   await prisma.veiculo.update({
@@ -266,6 +262,19 @@ export async function devolverVeiculo(
     where: { id: veiculoId },
     data: { 
       status: 'AGUARDANDO_CONFERENCIA'
+    }
+  })
+
+  // Conclui o agendamento ativo e libera os horários restantes
+  await prisma.agendamento.updateMany({
+    where: {
+      veiculoId: veiculoId,
+      colaboradorId: colaboradorId,
+      status: 'ATIVO'
+    },
+    data: {
+      status: 'CONCLUIDO',
+      dataHoraFim: new Date()
     }
   })
 

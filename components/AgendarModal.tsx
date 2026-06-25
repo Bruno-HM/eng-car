@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { getColaboradores, getVeiculosDisponiveis, validarPin, agendarVeiculo, getAgendamentosPorVeiculo } from "@/app/actions"
+import { getColaboradores, getVeiculosParaAgendamento, validarPin, agendarVeiculo, getAgendamentosPorVeiculo } from "@/app/actions"
 import VirtualNumpad from "./VirtualNumpad"
 import { useDialog } from "@/components/DialogContext"
 import { clientStore } from "@/lib/clientStore"
@@ -31,7 +31,7 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
   useEffect(() => {
     if (!clientStore.loaded) {
       Promise.all([
-        getVeiculosDisponiveis(),
+        getVeiculosParaAgendamento(),
         getColaboradores()
       ]).then(([veic, colab]) => {
         setVeiculos(veic)
@@ -187,7 +187,7 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
                 />
               </div>
               <div>
-                <label style={{ display: 'block', fontWeight: 600, marginBottom: '8px' }}>Devolução</label>
+                <label style={{ display: 'block', fontWeight: 600, marginBottom: '8px' }}>Devolução (Prevista / Máximo)</label>
                 <DatePicker
                   selected={endDate}
                   onChange={(date: Date | null) => setEndDate(date)}
