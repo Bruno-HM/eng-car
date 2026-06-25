@@ -337,6 +337,7 @@ export async function confirmarDevolucaoPorteiro(
       kmOriginalColab: dev.kmDeclarado,
       combustivelOriginalColab: dev.combustivelDeclarado,
       avariasOriginalColabJson: dev.avariasDeclaradasJson,
+      dataHoraOriginalColab: dev.dataHoraSolicitacao,
       dataHoraAcao: new Date()
     }
   })

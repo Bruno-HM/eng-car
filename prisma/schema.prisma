@@ -55,6 +55,7 @@ model Log {
   kmOriginalColab          Int?
   combustivelOriginalColab String?
   avariasOriginalColabJson String?
+  dataHoraOriginalColab    DateTime?
 
   veiculo     Veiculo     @relation(fields: [veiculoId], references: [id], onDelete: Cascade)
   colaborador Colaborador @relation(fields: [colaboradorId], references: [id], onDelete: Cascade)

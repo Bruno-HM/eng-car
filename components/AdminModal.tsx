@@ -435,7 +435,11 @@ export default function AdminModal({ onClose, onOpenPorteiro }: { onClose: () =>
                 </thead>
                 <tbody>
                   {logs.map(l => {
-                    const dataFormat = new Date(l.dataHoraAcao).toLocaleString('pt-BR')
+                    const dataFormat = new Date(l.dataHoraAcao).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
+                    let dataOriginalFormat = null
+                    if (l.dataHoraOriginalColab) {
+                      dataOriginalFormat = new Date(l.dataHoraOriginalColab).toLocaleString('pt-BR', { dateStyle: 'short', timeStyle: 'short' })
+                    }
                     let avariasFormat = "-"
                     if (l.avariasJson && l.avariasJson !== "{}" && l.avariasJson !== "null") {
                       try {
@@ -447,7 +451,18 @@ export default function AdminModal({ onClose, onOpenPorteiro }: { onClose: () =>
                     }
                     return (
                       <tr key={l.id} style={{ borderBottom: '1px solid var(--border)' }}>
-                        <td data-label="Data/Hora" style={{ padding: '12px', fontSize: '0.875rem' }}>{dataFormat}</td>
+                        <td data-label="Data/Hora" style={{ padding: '12px', fontSize: '0.875rem' }}>
+                          {l.tipo === 'DEVOLUCAO' && dataOriginalFormat ? (
+                            <>
+                              <div><strong>Devolvido:</strong> {dataOriginalFormat}</div>
+                              <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: '4px' }}>
+                                Confirmado: {dataFormat}
+                              </div>
+                            </>
+                          ) : (
+                            dataFormat
+                          )}
+                        </td>
                         <td data-label="Ação" style={{ padding: '12px' }}>
                           <span style={{ 
                             padding: '4px 8px', borderRadius: '6px', fontSize: '0.875rem', fontWeight: 600,
