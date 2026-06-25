@@ -4,33 +4,36 @@ import { useState, useEffect } from "react"
 import { getColaboradores, validarPin, retirarVeiculo, getAgendamentoAtualColaborador, getVeiculosDisponiveisParaColaborador } from "@/app/actions"
 import VirtualNumpad from "./VirtualNumpad"
 import { useDialog } from "@/components/DialogContext"
+import { clientStore } from "@/lib/clientStore"
 
 export default function RetirarModal({ onClose }: { onClose: () => void }) {
   const { showAlert } = useDialog()
   const [step, setStep] = useState(1) // 1: Colaborador, 2: PIN, 3: Veículo
-  const [colaboradores, setColaboradores] = useState<any[]>([])
+  const [colaboradores, setColaboradores] = useState<any[]>(clientStore.loaded ? clientStore.colaboradores : [])
   const [veiculos, setVeiculos] = useState<any[]>([])
   const [selectedColab, setSelectedColab] = useState<any>(null)
   const [agendamentoColab, setAgendamentoColab] = useState<any>(null)
   const [pinError, setPinError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const [loadingColabs, setLoadingColabs] = useState(true)
+  const [loadingColabs, setLoadingColabs] = useState(!clientStore.loaded)
 
   useEffect(() => {
-    getColaboradores().then(res => {
-      setColaboradores(res)
-      setLoadingColabs(false)
-    })
+    if (!clientStore.loaded) {
+      getColaboradores().then(res => {
+        setColaboradores(res)
+        setLoadingColabs(false)
+      })
+    }
   }, [])
 
   const handlePinComplete = async (pin: string) => {
     setLoading(true)
     const res = await validarPin(selectedColab.id, pin)
-    
+
     if (res.success) {
       const agendamento = await getAgendamentoAtualColaborador(selectedColab.id)
       setAgendamentoColab(agendamento)
-      
+
       const disponiveis = await getVeiculosDisponiveisParaColaborador(selectedColab.id)
       setVeiculos(disponiveis)
 
@@ -64,13 +67,13 @@ export default function RetirarModal({ onClose }: { onClose: () => void }) {
           </div>
           {loadingColabs ? (
             <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
-              Carregando motoristas...
+              Carregando colaboradores...
             </div>
           ) : (
             <div className="responsive-grid-2">
               {colaboradores.map(c => (
-                <div 
-                  key={c.id} 
+                <div
+                  key={c.id}
                   className="list-item"
                   onClick={() => { setSelectedColab(c); setStep(2) }}
                 >
@@ -85,11 +88,12 @@ export default function RetirarModal({ onClose }: { onClose: () => void }) {
       )}
 
       {step === 2 && (
-        <VirtualNumpad 
+        <VirtualNumpad
           title={`PIN para ${selectedColab.nome}`}
           onComplete={handlePinComplete}
           onCancel={() => { setStep(1); setPinError(null) }}
           error={pinError}
+          loading={loading}
         />
       )}
 
@@ -106,9 +110,9 @@ export default function RetirarModal({ onClose }: { onClose: () => void }) {
               <p style={{ fontSize: '1.25rem', textAlign: 'center' }}>
                 Olá, <strong>{selectedColab.nome}</strong>! Identificamos que você agendou o seguinte veículo para hoje:
               </p>
-              
-              <button 
-                className="giant-button" 
+
+              <button
+                className="giant-button"
                 style={{ width: '100%', maxWidth: '500px', height: 'auto', padding: '32px' }}
                 onClick={() => handleSelectVeiculo(agendamentoColab.veiculo.id)}
               >
@@ -120,8 +124,8 @@ export default function RetirarModal({ onClose }: { onClose: () => void }) {
                 </div>
               </button>
 
-              <button 
-                className="btn" 
+              <button
+                className="btn"
                 style={{ background: 'var(--surface-hover)', border: '1px solid var(--border)', marginTop: '10px' }}
                 onClick={() => setAgendamentoColab(null)}
               >
@@ -133,8 +137,8 @@ export default function RetirarModal({ onClose }: { onClose: () => void }) {
           ) : (
             <div className="responsive-grid-2">
               {veiculos.map(v => (
-                <div 
-                  key={v.id} 
+                <div
+                  key={v.id}
                   className="list-item"
                   onClick={() => handleSelectVeiculo(v.id)}
                 >

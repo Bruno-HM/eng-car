@@ -605,7 +605,13 @@ export default function AdminModal({ onClose, onOpenPorteiro }: { onClose: () =>
                         key={comb}
                         type="button"
                         className={`btn ${combustivelFinal === comb ? 'btn-primary' : ''}`}
-                        style={{ padding: '12px 4px', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
+                        style={{ 
+                          padding: '12px 4px', 
+                          fontSize: '0.85rem', 
+                          whiteSpace: 'nowrap',
+                          backgroundColor: combustivelFinal === comb ? '' : 'var(--surface-hover)',
+                          color: combustivelFinal === comb ? '' : 'var(--text-main)'
+                        }}
                         onClick={() => setCombustivelFinal(comb)}
                       >
                         {comb}
@@ -624,7 +630,13 @@ export default function AdminModal({ onClose, onOpenPorteiro }: { onClose: () =>
                           key={av}
                           type="button"
                           className={`btn ${selected ? 'btn-danger' : ''}`}
-                          style={{ padding: '8px 12px', fontSize: '0.875rem', backgroundColor: selected ? 'var(--danger)' : '', color: selected ? '#fff' : '' }}
+                          style={{ 
+                            padding: '8px 12px', 
+                            fontSize: '0.875rem', 
+                            backgroundColor: selected ? 'var(--danger)' : 'var(--surface-hover)', 
+                            color: selected ? '#fff' : 'var(--text-main)',
+                            border: '1px solid var(--border)'
+                          }}
                           onClick={() => {
                             toggleAvaria(av)
                             if (!selected) setEnviarParaManutencao(true)

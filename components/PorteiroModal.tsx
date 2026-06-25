@@ -183,7 +183,14 @@ export default function PorteiroModal({ onClose }: { onClose: () => void }) {
                       key={comb}
                       type="button"
                       className={`btn ${combustivelFinal === comb ? 'btn-primary' : ''}`}
-                      style={{ padding: '12px 4px', fontSize: '0.85rem', whiteSpace: 'nowrap' }}
+                      style={{ 
+                        padding: '12px 4px', 
+                        fontSize: '0.85rem', 
+                        whiteSpace: 'nowrap',
+                        backgroundColor: combustivelFinal === comb ? '' : 'var(--surface-hover)',
+                        color: combustivelFinal === comb ? '' : 'var(--text-main)',
+                        border: '1px solid var(--border)'
+                      }}
                       onClick={() => setCombustivelFinal(comb)}
                     >
                       {comb}
@@ -202,7 +209,13 @@ export default function PorteiroModal({ onClose }: { onClose: () => void }) {
                         key={av}
                         type="button"
                         className={`btn ${selected ? 'danger-active' : ''}`}
-                        style={{ padding: '8px 12px', fontSize: '0.875rem' }}
+                        style={{ 
+                          padding: '8px 12px', 
+                          fontSize: '0.875rem',
+                          backgroundColor: selected ? '' : 'var(--surface-hover)',
+                          color: selected ? '' : 'var(--text-main)',
+                          border: '1px solid var(--border)'
+                        }}
                         onClick={() => {
                           toggleAvaria(av)
                           if (!selected) setEnviarParaManutencao(true)

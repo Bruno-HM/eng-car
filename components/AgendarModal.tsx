@@ -4,18 +4,19 @@ import { useState, useEffect } from "react"
 import { getColaboradores, getVeiculosDisponiveis, validarPin, agendarVeiculo } from "@/app/actions"
 import VirtualNumpad from "./VirtualNumpad"
 import { useDialog } from "@/components/DialogContext"
+import { clientStore } from "@/lib/clientStore"
 
 export default function AgendarModal({ onClose }: { onClose: () => void }) {
   const { showAlert } = useDialog()
   const [step, setStep] = useState(1) // 1: Veículo, 2: Datas, 3: Colab, 4: PIN
-  const [veiculos, setVeiculos] = useState<any[]>([])
-  const [colaboradores, setColaboradores] = useState<any[]>([])
+  const [veiculos, setVeiculos] = useState<any[]>(clientStore.loaded ? clientStore.veiculosDisponiveis : [])
+  const [colaboradores, setColaboradores] = useState<any[]>(clientStore.loaded ? clientStore.colaboradores : [])
   
   const [selectedVeiculo, setSelectedVeiculo] = useState<any>(null)
   const [selectedColab, setSelectedColab] = useState<any>(null)
   const [pinError, setPinError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const [loadingData, setLoadingData] = useState(true)
+  const [loadingData, setLoadingData] = useState(!clientStore.loaded)
 
   const [dataInicio, setDataInicio] = useState("")
   const [horaInicio, setHoraInicio] = useState("")
@@ -23,14 +24,16 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
   const [horaFim, setHoraFim] = useState("")
 
   useEffect(() => {
-    Promise.all([
-      getVeiculosDisponiveis(),
-      getColaboradores()
-    ]).then(([veic, colab]) => {
-      setVeiculos(veic)
-      setColaboradores(colab)
-      setLoadingData(false)
-    })
+    if (!clientStore.loaded) {
+      Promise.all([
+        getVeiculosDisponiveis(),
+        getColaboradores()
+      ]).then(([veic, colab]) => {
+        setVeiculos(veic)
+        setColaboradores(colab)
+        setLoadingData(false)
+      })
+    }
   }, [])
 
   const handlePinComplete = async (pin: string) => {
@@ -190,6 +193,7 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
           onComplete={handlePinComplete}
           onCancel={() => { setStep(3); setPinError(null) }}
           error={pinError}
+          loading={loading}
         />
       )}
     </div>

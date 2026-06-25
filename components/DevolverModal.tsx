@@ -4,16 +4,18 @@ import { useState, useEffect } from "react"
 import { getTodosVeiculos, validarPin, devolverVeiculo } from "@/app/actions"
 import VirtualNumpad from "./VirtualNumpad"
 import { useDialog } from "@/components/DialogContext"
+import { clientStore } from "@/lib/clientStore"
 
 export default function DevolverModal({ onClose }: { onClose: () => void }) {
   const { showAlert, showConfirm } = useDialog()
   const [step, setStep] = useState(1) // 1: Veículo, 2: PIN, 3: Form (KM, Combustível, Avarias)
-  const [veiculos, setVeiculos] = useState<any[]>([])
+  const [veiculos, setVeiculos] = useState<any[]>(clientStore.loaded ? clientStore.veiculos.filter((v: any) => v.status === 'EM_USO') : [])
   
   const [selectedColab, setSelectedColab] = useState<any>(null)
   const [selectedVeiculo, setSelectedVeiculo] = useState<any>(null)
   const [pinError, setPinError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [loadingVeiculos, setLoadingVeiculos] = useState(!clientStore.loaded)
 
   // Form State
   const [kmInformado, setKmInformado] = useState<string>("")
@@ -27,10 +29,13 @@ export default function DevolverModal({ onClose }: { onClose: () => void }) {
   })
 
   useEffect(() => {
-    getTodosVeiculos().then(res => {
-      const emUso = res.filter(v => v.status === 'EM_USO')
-      setVeiculos(emUso)
-    })
+    if (!clientStore.loaded) {
+      getTodosVeiculos().then(res => {
+        const emUso = res.filter(v => v.status === 'EM_USO')
+        setVeiculos(emUso)
+        setLoadingVeiculos(false)
+      })
+    }
   }, [])
 
   const handlePinComplete = async (pin: string) => {
@@ -99,7 +104,11 @@ export default function DevolverModal({ onClose }: { onClose: () => void }) {
             <h2 className="modal-title">Qual veículo está devolvendo?</h2>
             <button className="btn-close" onClick={onClose}>×</button>
           </div>
-          {veiculos.length === 0 ? (
+          {loadingVeiculos ? (
+            <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
+              Carregando veículos...
+            </div>
+          ) : veiculos.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '40px', fontSize: '1.25rem', color: 'var(--text-muted)' }}>
               Nenhum veículo em uso no momento.
             </div>
@@ -148,6 +157,7 @@ export default function DevolverModal({ onClose }: { onClose: () => void }) {
           onComplete={handlePinComplete}
           onCancel={() => { setStep(1); setPinError(null) }}
           error={pinError}
+          loading={loading}
         />
       )}
 
