@@ -172,7 +172,7 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
                 <label style={{ display: 'block', fontWeight: 600, marginBottom: '8px' }}>Retirada</label>
                 <DatePicker
                   selected={startDate}
-                  onChange={(date) => setStartDate(date)}
+                  onChange={(date: Date | null) => setStartDate(date)}
                   showTimeSelect
                   timeFormat="HH:mm"
                   timeIntervals={30}
@@ -190,7 +190,7 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
                 <label style={{ display: 'block', fontWeight: 600, marginBottom: '8px' }}>Devolução</label>
                 <DatePicker
                   selected={endDate}
-                  onChange={(date) => setEndDate(date)}
+                  onChange={(date: Date | null) => setEndDate(date)}
                   showTimeSelect
                   timeFormat="HH:mm"
                   timeIntervals={30}
