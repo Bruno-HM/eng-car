@@ -34,13 +34,16 @@
   scrollbar-width: none;
   touch-action: manipulation;
 }
-::-webkit-scrollbar { display: none; }
+
+::-webkit-scrollbar {
+  display: none;
+}
 
 body {
   font-family: var(--font-display);
   background-color: var(--background);
-  background-image: radial-gradient(circle at top right, rgba(2,132,199,0.05), transparent 40%),
-                    radial-gradient(circle at bottom left, rgba(22,163,74,0.05), transparent 40%);
+  background-image: radial-gradient(circle at top right, rgba(2, 132, 199, 0.05), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(22, 163, 74, 0.05), transparent 40%);
   color: var(--text-main);
   height: 100vh;
   overflow: hidden;
@@ -55,9 +58,16 @@ button {
   background: none;
   transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }
-button:active { transform: scale(0.96); }
 
-.layout-container { display: flex; height: 100vh; width: 100vw; }
+button:active {
+  transform: scale(0.96);
+}
+
+.layout-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
 
 /* Sidebar */
 .sidebar {
@@ -70,6 +80,7 @@ button:active { transform: scale(0.96); }
   padding: 32px 24px;
   z-index: 10;
 }
+
 .sidebar-header {
   font-size: 1.5rem;
   font-weight: 500;
@@ -80,6 +91,7 @@ button:active { transform: scale(0.96); }
   gap: 12px;
   letter-spacing: -0.5px;
 }
+
 .agenda-list {
   flex: 1;
   overflow-y: auto;
@@ -87,6 +99,7 @@ button:active { transform: scale(0.96); }
   flex-direction: column;
   gap: 12px;
 }
+
 .agenda-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -97,20 +110,24 @@ button:active { transform: scale(0.96); }
   align-items: center;
   transition: all 0.2s;
 }
+
 .agenda-card:hover {
   background: var(--surface-hover);
   border-color: var(--border-hover);
 }
+
 .agenda-cancel-btn {
   color: var(--danger);
   font-size: 2rem;
   padding: 0 8px;
   opacity: 0.7;
 }
+
 .agenda-cancel-btn:hover {
   opacity: 1;
   text-shadow: 0 0 8px var(--danger-glow);
 }
+
 .agenda-time {
   font-size: 0.9rem;
   font-weight: 400;
@@ -118,11 +135,13 @@ button:active { transform: scale(0.96); }
   margin-bottom: 4px;
   text-shadow: 0 0 8px var(--primary-glow);
 }
+
 .agenda-user {
   font-weight: 500;
   font-size: 1.1rem;
   color: var(--text-main);
 }
+
 .agenda-car {
   font-size: 0.9rem;
   color: var(--text-muted);
@@ -144,6 +163,7 @@ button:active { transform: scale(0.96); }
   align-items: center;
   margin-bottom: 48px;
 }
+
 .logo-area {
   cursor: pointer;
   display: flex;
@@ -151,8 +171,14 @@ button:active { transform: scale(0.96); }
   transition: opacity 0.2s;
   opacity: 0.9;
 }
-.logo-area:hover { opacity: 1; }
-.logo-image { object-fit: contain; }
+
+.logo-area:hover {
+  opacity: 1;
+}
+
+.logo-image {
+  object-fit: contain;
+}
 
 .time-display {
   font-size: 3.5rem;
@@ -190,8 +216,11 @@ button:active { transform: scale(0.96); }
 .giant-button::before {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
   opacity: 0;
   transition: opacity 0.15s;
 }
@@ -202,16 +231,43 @@ button:active { transform: scale(0.96); }
   background: var(--surface-hover);
   box-shadow: var(--shadow-md);
 }
-.giant-button:hover::before { opacity: 1; }
 
-.giant-button.primary:hover { border-color: var(--primary); box-shadow: 0 8px 32px var(--primary-glow); }
-.giant-button.primary .icon-wrapper { color: var(--primary); text-shadow: 0 0 16px var(--primary-glow); border-color: var(--primary); }
+.giant-button:hover::before {
+  opacity: 1;
+}
 
-.giant-button.secondary:hover { border-color: var(--secondary); box-shadow: 0 8px 32px var(--secondary-glow); }
-.giant-button.secondary .icon-wrapper { color: var(--secondary); text-shadow: 0 0 16px var(--secondary-glow); border-color: var(--secondary); }
+.giant-button.primary:hover {
+  border-color: var(--primary);
+  box-shadow: 0 8px 32px var(--primary-glow);
+}
 
-.giant-button.danger:hover { border-color: var(--danger); box-shadow: 0 8px 32px var(--danger-glow); }
-.giant-button.danger .icon-wrapper { color: var(--danger); text-shadow: 0 0 16px var(--danger-glow); border-color: var(--danger); }
+.giant-button.primary .icon-wrapper {
+  color: var(--primary);
+  text-shadow: 0 0 16px var(--primary-glow);
+  border-color: var(--primary);
+}
+
+.giant-button.secondary:hover {
+  border-color: var(--secondary);
+  box-shadow: 0 8px 32px var(--secondary-glow);
+}
+
+.giant-button.secondary .icon-wrapper {
+  color: var(--secondary);
+  text-shadow: 0 0 16px var(--secondary-glow);
+  border-color: var(--secondary);
+}
+
+.giant-button.danger:hover {
+  border-color: var(--danger);
+  box-shadow: 0 8px 32px var(--danger-glow);
+}
+
+.giant-button.danger .icon-wrapper {
+  color: var(--danger);
+  text-shadow: 0 0 16px var(--danger-glow);
+  border-color: var(--danger);
+}
 
 .icon-wrapper {
   font-size: 3rem;
@@ -253,7 +309,10 @@ button:active { transform: scale(0.96); }
 /* Modals */
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(8px);
   display: flex;
@@ -272,7 +331,7 @@ button:active { transform: scale(0.96); }
   max-width: 800px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.15);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -307,6 +366,7 @@ button:active { transform: scale(0.96); }
   justify-content: center;
   white-space: nowrap;
 }
+
 .btn-close:hover {
   background-color: var(--surface-hover);
   color: var(--text-main);
@@ -377,6 +437,7 @@ button:active { transform: scale(0.96); }
   font-weight: 600;
   box-shadow: 0 4px 16px var(--primary-glow);
 }
+
 .btn-primary:hover {
   filter: brightness(1.1);
 }
@@ -441,7 +502,9 @@ button:active { transform: scale(0.96); }
 }
 
 /* Admin forms and lists */
-input, select, textarea {
+input,
+select,
+textarea {
   background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text-main);
@@ -452,7 +515,9 @@ input, select, textarea {
   outline: none;
   width: 100%;
 }
-input:focus, select:focus {
+
+input:focus,
+select:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 2px var(--primary-glow);
 }
@@ -462,12 +527,14 @@ input:focus, select:focus {
   width: 100%;
   border-collapse: collapse;
 }
+
 .table-logs th {
   text-align: left;
   padding: 12px;
   color: var(--text-muted);
   border-bottom: 1px solid var(--border);
 }
+
 .table-logs td {
   padding: 16px 12px;
   border-bottom: 1px solid var(--border);
@@ -543,7 +610,7 @@ input:focus, select:focus {
   }
 
   .logo-image {
-    max-width: 350px;
+    max-width: 270px;
     height: auto;
   }
 
@@ -727,7 +794,7 @@ input:focus, select:focus {
   background-color: var(--surface) !important;
   border: 1px solid var(--border) !important;
   border-radius: 12px !important;
-  box-shadow: 0 12px 32px rgba(0,0,0,0.1) !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1) !important;
 }
 
 .react-datepicker__header {
@@ -737,7 +804,9 @@ input:focus, select:focus {
   border-top-right-radius: 12px !important;
 }
 
-.react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header {
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
   color: var(--text-main) !important;
   font-size: 1.1rem !important;
 }
@@ -746,7 +815,8 @@ input:focus, select:focus {
   color: var(--text-muted) !important;
 }
 
-.react-datepicker__day, .react-datepicker__time-name {
+.react-datepicker__day,
+.react-datepicker__time-name {
   color: var(--text-main) !important;
   width: 2rem !important;
   line-height: 2rem !important;
@@ -757,7 +827,8 @@ input:focus, select:focus {
   background-color: var(--surface-hover) !important;
 }
 
-.react-datepicker__day--selected, .react-datepicker__day--keyboard-selected {
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
   background-color: var(--primary) !important;
   color: #FFFFFF !important;
   font-weight: bold !important;
@@ -804,6 +875,7 @@ input:focus, select:focus {
 .react-datepicker__navigation {
   top: 12px !important;
 }
+
 .react-datepicker__navigation-icon::before {
   border-color: var(--text-main) !important;
   border-width: 2px !important;
@@ -813,18 +885,25 @@ input:focus, select:focus {
   .react-datepicker {
     font-size: 0.9rem !important;
   }
-  .react-datepicker__day, .react-datepicker__time-name {
+
+  .react-datepicker__day,
+  .react-datepicker__time-name {
     width: 1.6rem !important;
     line-height: 1.6rem !important;
     font-size: 0.9rem !important;
   }
-  .react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header {
+
+  .react-datepicker__current-month,
+  .react-datepicker-time__header,
+  .react-datepicker-year-header {
     font-size: 1rem !important;
   }
+
   .custom-datepicker {
     font-size: 1rem;
     padding: 12px;
   }
+
   .react-datepicker__time-list-item {
     padding: 8px 4px !important;
     font-size: 0.95rem !important;
