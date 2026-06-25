@@ -191,7 +191,7 @@ export default function DevolverModal({ onClose }: { onClose: () => void }) {
                     style={{ 
                       flex: 1, 
                       backgroundColor: combustivel === lvl ? 'var(--primary)' : 'var(--surface-hover)',
-                      color: combustivel === lvl ? '#0B0F19' : 'var(--text-main)',
+                      color: combustivel === lvl ? '#FFFFFF' : 'var(--text-main)',
                       border: '1px solid var(--border)',
                       padding: '12px 4px',
                       fontSize: '0.85rem',

@@ -1,19 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --primary: #00E5FF;
-  --primary-glow: rgba(0, 229, 255, 0.3);
-  --secondary: #00E676;
-  --secondary-glow: rgba(0, 230, 118, 0.3);
-  --danger: #FF1744;
-  --danger-glow: rgba(255, 23, 68, 0.3);
-  --background: #0B0F19;
-  --surface: rgba(255, 255, 255, 0.04);
-  --surface-hover: rgba(255, 255, 255, 0.08);
-  --text-main: #FFFFFF;
-  --text-muted: #94A3B8;
-  --border: rgba(255, 255, 255, 0.1);
-  --border-hover: rgba(255, 255, 255, 0.2);
+  --primary: #0284C7;
+  --primary-glow: rgba(2, 132, 199, 0.2);
+  --secondary: #16A34A;
+  --secondary-glow: rgba(22, 163, 74, 0.2);
+  --danger: #DC2626;
+  --danger-glow: rgba(220, 38, 38, 0.2);
+  --background: #F8FAFC;
+  --surface: #FFFFFF;
+  --surface-hover: #F1F5F9;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --border: #E2E8F0;
+  --border-hover: #CBD5E1;
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.2);
   --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.3);
@@ -39,8 +39,8 @@
 body {
   font-family: var(--font-display);
   background-color: var(--background);
-  background-image: radial-gradient(circle at top right, rgba(0,229,255,0.05), transparent 40%),
-                    radial-gradient(circle at bottom left, rgba(0,230,118,0.05), transparent 40%);
+  background-image: radial-gradient(circle at top right, rgba(2,132,199,0.05), transparent 40%),
+                    radial-gradient(circle at bottom left, rgba(22,163,74,0.05), transparent 40%);
   color: var(--text-main);
   height: 100vh;
   overflow: hidden;
@@ -62,7 +62,7 @@ button:active { transform: scale(0.96); }
 /* Sidebar */
 .sidebar {
   width: 340px;
-  background: rgba(11, 15, 25, 0.6);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(24px);
   border-right: 1px solid var(--border);
   display: flex;
@@ -263,7 +263,7 @@ button:active { transform: scale(0.96); }
 }
 
 .modal-content {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(24px);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -272,7 +272,7 @@ button:active { transform: scale(0.96); }
   max-width: 800px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -373,7 +373,7 @@ button:active { transform: scale(0.96); }
 
 .btn-primary {
   background-color: var(--primary);
-  color: #0B0F19;
+  color: #FFFFFF;
   font-weight: 600;
   box-shadow: 0 4px 16px var(--primary-glow);
 }
@@ -383,7 +383,7 @@ button:active { transform: scale(0.96); }
 
 .btn-secondary {
   background-color: var(--secondary);
-  color: #0B0F19;
+  color: #FFFFFF;
   font-weight: 600;
   box-shadow: 0 4px 16px var(--secondary-glow);
 }
@@ -724,10 +724,10 @@ input:focus, select:focus {
 
 .react-datepicker {
   font-family: inherit !important;
-  background-color: #0F172A !important;
+  background-color: var(--surface) !important;
   border: 1px solid var(--border) !important;
   border-radius: 12px !important;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.5) !important;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1) !important;
 }
 
 .react-datepicker__header {
@@ -759,7 +759,7 @@ input:focus, select:focus {
 
 .react-datepicker__day--selected, .react-datepicker__day--keyboard-selected {
   background-color: var(--primary) !important;
-  color: #0B0F19 !important;
+  color: #FFFFFF !important;
   font-weight: bold !important;
 }
 
@@ -774,7 +774,7 @@ input:focus, select:focus {
 }
 
 .react-datepicker__time-container .react-datepicker__time {
-  background-color: #0F172A !important;
+  background-color: var(--surface) !important;
 }
 
 .react-datepicker__time-list-item {
@@ -797,7 +797,7 @@ input:focus, select:focus {
 
 .react-datepicker__time-list-item--selected {
   background-color: var(--primary) !important;
-  color: #0B0F19 !important;
+  color: #FFFFFF !important;
 }
 
 /* Aumenta botões de navegação no calendário */
