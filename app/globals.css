@@ -808,3 +808,25 @@ input:focus, select:focus {
   border-color: var(--text-main) !important;
   border-width: 2px !important;
 }
+
+@media (max-width: 768px) {
+  .react-datepicker {
+    font-size: 0.9rem !important;
+  }
+  .react-datepicker__day, .react-datepicker__time-name {
+    width: 1.6rem !important;
+    line-height: 1.6rem !important;
+    font-size: 0.9rem !important;
+  }
+  .react-datepicker__current-month, .react-datepicker-time__header, .react-datepicker-year-header {
+    font-size: 1rem !important;
+  }
+  .custom-datepicker {
+    font-size: 1rem;
+    padding: 12px;
+  }
+  .react-datepicker__time-list-item {
+    padding: 8px 4px !important;
+    font-size: 0.95rem !important;
+  }
+}
