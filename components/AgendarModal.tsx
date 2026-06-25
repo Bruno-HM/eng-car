@@ -52,9 +52,6 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
     }
 
     // Se o PIN for válido, tenta agendar
-    const dtInicio = new Date(`${dataInicio}T${horaInicio}`)
-    const dtFim = new Date(`${dataFim}T${horaFim}`)
-
     const agendarRes = await agendarVeiculo(selectedVeiculo.id, selectedColab.id, startDate!, endDate!)
     setLoading(false)
 
