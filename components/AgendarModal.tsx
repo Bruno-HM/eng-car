@@ -184,6 +184,7 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
                   placeholderText="Selecionar Data e Hora"
                   className="custom-datepicker"
                   popperProps={{ strategy: "fixed" }}
+                  onFocus={(e) => e.target.blur()}
                 />
               </div>
               <div>
@@ -202,6 +203,7 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
                   placeholderText="Selecionar Data e Hora"
                   className="custom-datepicker"
                   popperProps={{ strategy: "fixed" }}
+                  onFocus={(e) => e.target.blur()}
                 />
               </div>
             </div>
