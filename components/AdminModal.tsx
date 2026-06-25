@@ -457,9 +457,30 @@ export default function AdminModal({ onClose, onOpenPorteiro }: { onClose: () =>
                         </td>
                         <td data-label="Veículo" style={{ padding: '12px', fontSize: '0.875rem' }}>{l.veiculo.placa} - {l.veiculo.modelo}</td>
                         <td data-label="Colaborador" style={{ padding: '12px', fontSize: '0.875rem' }}>{l.colaborador ? l.colaborador.nome : 'ADMIN'}</td>
-                        <td data-label="KM" style={{ padding: '12px', fontSize: '0.875rem' }}>{l.kmInformado}</td>
-                        <td data-label="Combustível" style={{ padding: '12px', fontSize: '0.875rem' }}>{l.combustivel || '-'}</td>
-                        <td data-label="Avarias" style={{ padding: '12px', fontSize: '0.875rem', color: avariasFormat !== '-' ? 'var(--danger)' : 'inherit' }}>{avariasFormat}</td>
+                        <td data-label="KM" style={{ padding: '12px', fontSize: '0.875rem' }}>
+                          {l.kmInformado} 
+                          {l.kmOriginalColab && l.kmOriginalColab !== l.kmInformado && (
+                            <div style={{ color: 'var(--danger)', fontSize: '0.75rem', marginTop: '4px' }}>
+                              (Declarado: {l.kmOriginalColab})
+                            </div>
+                          )}
+                        </td>
+                        <td data-label="Combustível" style={{ padding: '12px', fontSize: '0.875rem' }}>
+                          {l.combustivel || '-'}
+                          {l.combustivelOriginalColab && l.combustivelOriginalColab !== l.combustivel && (
+                            <div style={{ color: 'var(--danger)', fontSize: '0.75rem', marginTop: '4px' }}>
+                              (Declarado: {l.combustivelOriginalColab})
+                            </div>
+                          )}
+                        </td>
+                        <td data-label="Avarias" style={{ padding: '12px', fontSize: '0.875rem', color: avariasFormat !== '-' ? 'var(--danger)' : 'inherit' }}>
+                          {avariasFormat}
+                          {l.avariasOriginalColabJson && l.avariasOriginalColabJson !== l.avariasJson && (
+                            <div style={{ color: 'var(--danger)', fontSize: '0.75rem', marginTop: '4px' }}>
+                              (Diferente da declaração)
+                            </div>
+                          )}
+                        </td>
                       </tr>
                     )
                   })}
