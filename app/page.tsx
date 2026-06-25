@@ -119,6 +119,7 @@ export default function Home() {
       setActiveModal(null)
       setCancelingAgendamento(null)
       loadAgenda()
+      preloadData()
     }
     window.addEventListener('popstate', handlePopState)
 
@@ -138,6 +139,7 @@ export default function Home() {
       setActiveModal(null)
       setCancelingAgendamento(null)
       loadAgenda()
+      preloadData()
     }
   }
 
