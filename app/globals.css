@@ -701,6 +701,10 @@ input:focus, select:focus {
   width: 100%;
 }
 
+.react-datepicker-popper {
+  z-index: 99999 !important;
+}
+
 .custom-datepicker {
   width: 100%;
   padding: 16px;

@@ -183,7 +183,7 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
                   minDate={new Date()}
                   placeholderText="Selecionar Data e Hora"
                   className="custom-datepicker"
-                  withPortal
+                  popperProps={{ strategy: "fixed" }}
                 />
               </div>
               <div>
@@ -201,7 +201,7 @@ export default function AgendarModal({ onClose }: { onClose: () => void }) {
                   minDate={startDate || new Date()}
                   placeholderText="Selecionar Data e Hora"
                   className="custom-datepicker"
-                  withPortal
+                  popperProps={{ strategy: "fixed" }}
                 />
               </div>
             </div>
