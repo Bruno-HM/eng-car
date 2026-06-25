@@ -308,9 +308,9 @@ export default function AdminModal({ onClose, onOpenPorteiro }: { onClose: () =>
         <div className="modal-content">
           <div className="modal-header">
             <h2 className="modal-title">Colaboradores</h2>
-            <div>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button className="btn-close" onClick={() => setStep(2)}>Voltar</button>
               <button className="btn btn-primary" onClick={abrirNovoColab}>+ Novo</button>
-              <button className="btn-close" style={{ marginLeft: '16px' }} onClick={() => setStep(2)}>Voltar</button>
             </div>
           </div>
           <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
@@ -350,9 +350,9 @@ export default function AdminModal({ onClose, onOpenPorteiro }: { onClose: () =>
         <div className="modal-content">
           <div className="modal-header">
             <h2 className="modal-title">Veículos</h2>
-            <div>
+            <div style={{ display: 'flex', gap: '12px' }}>
+              <button className="btn-close" onClick={() => setStep(2)}>Voltar</button>
               <button className="btn btn-primary" onClick={abrirNovoVeiculo}>+ Novo</button>
-              <button className="btn-close" style={{ marginLeft: '16px' }} onClick={() => setStep(2)}>Voltar</button>
             </div>
           </div>
           <div style={{ maxHeight: '60vh', overflowY: 'auto' }}>
